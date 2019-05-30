@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Bush Studies | Create a Study</title>
+
+        <link rel="apple-touch-icon" sizes="180x180" href="/static/images/apple-touch-icon.png">
+	    <link rel="icon" type="image/png" sizes="32x32" href="/static/images/favicon-32x32.png">
+	    <link rel="icon" type="image/png" sizes="16x16" href="/static/images/favicon-16x16.png">
+	    <link rel="manifest" href="/static/images/site.webmanifest">
+
+        <link href="https://fonts.googleapis.com/css?family=Montserrat&display=swap" rel="stylesheet">
+	    <link rel="stylesheet" type="text/css" href="/static/css/main.css">
+
+	    {# Importing wtforms into our html template #}
+	    {% import 'wtf_tinymce/editor.html' as tinymce with context %}
+
+        {# API Key associated with my personal mail because they forgot I made
+        an account with my bush mail. Shouldn't matter. #}
+        <script src="https://cloud.tinymce.com/5/tinymce.min.js?apiKey=ryo7weu17ckobt2dsmf8bjqrpftziehbulvu4tx87hk36wnp"></script>
+	    {# wtf-tinymce options as javascript, found here
+	    https://www.tiny.cloud/docs/configure/ #}
+        <script>
+        tinymce.init({
+            selector:'textarea',
+            plugins: 'paste link lists',
+            branding: false,
+            menubar: false,
+            statusbar: false,
+            toolbar: 'undo redo |\
+            bold italic underline strikethrough subscript superscript |\
+            bullist numlist | alignleft aligncenter alignright alignjustify |\
+            outdent indent | removeformat link'
+        });
+        </script>
+
+		<style>
+        .study button:hover {
+            background-color: #a8a8a8;
+        }
+
+        .add {
+            position: fixed;
+            top: 58px;
+            left: 0%;
+            width: 100%;
+        }
+
+        .add input {
+            padding: 15px 32px;
+            font-size: 16px;
+            width: 50%;
+            float: left;
+            border: none;
+            background-color: #cccccc;
+        }
+
+        .add input:hover {
+            background-color: #a8a8a8;
+        }
+
+        .studyform {
+            position: absolute;
+            top: 30%;
+            left: 25%;
+            width: 50%;
+            z-index: -1;
+        }
+
+        .studyform button {
+            padding: 15px 32px;
+            font-size: 16px;
+            display: inline;
+            border: none;
+            background-color: #cccccc;
+        }
+
+        .studyform input, label, textarea {
+            display: block;
+        }
+
+        .studyform input[type=text], textarea {
+            width: 100%;
+            padding: 12px 20px;
+            margin: 8px 0;
+            box-sizing: border-box;
+            font-size: 16px;
+            font-family: 'Arial', Helvetica, sans-serif;
+        }
+
+        .studyform label {
+            padding-top: 5px;
+            font-size: 20px;
+        }
+
+        .studyform textarea {
+            height: 500px;
+            resize: none;
+        }
+
+        .submit input {
+            padding: 15px 32px;
+            font-size: 16px;
+            display: inline;
+            border: none;
+            background-color: #cccccc;
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+
+        .submit input:hover {
+            background-color: #a8a8a8;
+        }
+
+        h2 {
+            position: absolute;
+            top: 20%;
+            left: 25%;
+            width: 50%;
+        }
+
+        .clear input {
+                position: fixed;
+                top: 20%;
+                left: 90%;
+                padding: 15px 32px;
+                font-size: 16px;
+                display: inline;
+                border: none;
+                background-color: #cccccc;
+        }
+
+        .clear input:hover {
+            background-color: #a8a8a8;
+        }
+        </style>
+    </head>
+    <body>
+        <div class='image'>
+            <a href="http://www.bush.edu">
+			    <img src="/static/images/logo.png">
+		    </a>
+        </div>
+        <div class='navbar'>
+            <nav>
+                <ul>
+                    <li><form action="{{ url_for('index') }}" method='get'> <button type='submit'>Home</button> </form></li>
+                    <li><form action="{{ url_for('studies') }}" method='get'> <button type='submit'>Studies</button> </form></li>
+                    <li><form action="{{ url_for('create') }}" method='get'><button>Create</button></form></li>
+                    <li><form action="{{ url_for('about') }}" method='get'><button>About</button></form></li>
+                    <div class='search'>
+                        <li>
+                            <form action="{{ url_for('redirector', page='search') }}" method='post'>
+                                <input type='text' placeholder='Search...' name='title' autocomplete='off'>
+                            </form>
+                        </li>
+                    </div>
+                    <div class='logout'>
+                        <li><form action="{{ url_for('login') }}" method='get'><button>Log Out</button></form></li>
+                    </div>
+                </ul>
+            </nav>
+        </div>
+        {% if account_id not in banned %}
+        <div class='header'><h1>Create a Study</h1></div>
+        <div class='study'>
+            <div class='add'>
+                {% if newStudy %}
+                <form action={{ url_for('redirector', page='create') }} method='post'>
+                    <input type='submit' name='addtextnew' value='Add a Text Box'>
+                </form>
+                <form action={{ url_for('redirector', page='create') }} method='post'>
+                    <input type='submit' name='addimgnew' value='Add an Image URL'>
+                </form>
+                {% else %}
+                <form action={{ url_for('redirector', page='create') }} method='post'>
+                    <input type='submit' name='addtext' value='Add a Text Box'>
+                </form>
+                <form action={{ url_for('redirector', page='create') }} method='post'>
+                    <input type='submit' name='addimg' value='Add an Image URL'>
+                </form>
+                {% endif %}
+            </div>
+            <div class='clear'>
+                <form action={{ url_for('redirector', page='create') }} method='post'>
+                    <input type='submit' name='clear' value='Clear'>
+                </form>
+            </div>
+            <div class='studyform'>
+                <form action={{ url_for('redirector', page='studies') }} method='post'>
+                    <div>{{ form.title.label }} {{ form.title(autocomplete='off') }}</div>
+
+                    <div>{{ form.author.label }} {{ form.author(autocomplete='off') }}</div>
+
+                    {% for element in elements %}
+                    {% if element == 't' %}
+                    <div>{{ form.text.label }} {{ form.text() }}</div>
+                    {% elif element == 'i' %}
+                    <div>{{ form.img.label }} {{ form.img() }}</div>
+                    {% endif %}
+                    {% endfor %}
+                    <div class='submit'>
+                        <input type='submit' name='submitstudy'>
+                    </div>
+                </form>
+            </div>
+        </div>
+        {% else %}
+        <h2>You have been banned from creating studies. If you would like
+        to appeal your ban, please talk to a department chair.</h2>
+        {% endif %}
+    </body>
+</html>

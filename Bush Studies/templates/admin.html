@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    <style>
+    form {
+        margin-top: 100px;
+        margin-left: 25%;
+    }
+
+    input[type='text'] {
+        width: 300px;
+        margin-bottom: 20px;
+    }
+    </style>
+    </head>
+    <body>
+        <form action={{ url_for('redirector', page='admin') }} method='post'>
+            <label for='addadmin'>Add an admin by email address</label>
+            <input type='text' name='addadmin' value=''></input>
+            <br>
+            <label for='ban'>Ban by email address</label>
+            <input type='text' name='ban' value=''></input>
+            <br>
+            <label for='unban'>Unban by email address</label>
+            <input type='text' name='unban' value=''></input>
+            <br>
+            <input type='submit'>
+        </form>
+        <form action={{ url_for('index') }} method='get'><input type='submit' value='Home'></form>
+    </body>
+</html>

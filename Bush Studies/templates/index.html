@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+{# This is how you write comments with the Jinja2 template system.
+Templating allows you to write basic python code that allows you to
+conditionally and variably write HTML elements. I'm not going to bother to
+explain most of the HTML as it should be fairly self-evident or standard. #}
+<html>
+    <head>
+
+        <meta charset="utf-8">
+        <title>Bush Studies | Home</title>
+
+        {# Storing the favicon and other stuff like that. (FUTURE: Get better
+        images; one of them isn't found for some reason?) #}
+        <link rel="apple-touch-icon" sizes="180x180" href="/static/images/apple-touch-icon.png">
+	    <link rel="icon" type="image/png" sizes="32x32" href="/static/images/favicon-32x32.png">
+	    <link rel="icon" type="image/png" sizes="16x16" href="/static/images/favicon-16x16.png">
+	    <link rel="manifest" href="/static/images/site.webmanifest">
+
+        {# Linking the universal CSS sheet, which styles the navigation bar,
+        and the font#}
+        <link href="https://fonts.googleapis.com/css?family=Montserrat&display=swap" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="/static/css/main.css">
+        {# I've put page specific CSS in a style block as opposed to its own
+        file for simplicity's sake, although there's none for the home page. #}
+        <style>
+        </style>
+    </head>
+    <body>
+        {# Naming divs can be helpful for styling specific sections of HTML #}
+        <div class='image'>
+            <a href="http://www.bush.edu">
+			    <img src="/static/images/logo.png">
+		    </a>
+        </div>
+        <div class='navbar'>
+            <nav>
+                <ul>
+                    {# Here we use the <form> tag with action and method
+                    attributes. action defines which page we want to be taken
+                    to when submitting the form, and method determines how to
+                    signal the page. url_for refers to the name of the html
+                    page, and variables can be passed in like
+                    url_for('page', pageVar = 'someVar') #}
+                    <li><form action="{{ url_for('index') }}" method='get'> <button>Home</button> </form></li>
+                    <li><form action="{{ url_for('studies') }}" method='get'> <button>Studies</button> </form></li>
+                    <li><form action="{{ url_for('create') }}" method='get'><button>Create</button></form></li>
+                    <li><form action="{{ url_for('about') }}" method='get'><button>About</button></form></li>
+                    <div class='search'>
+                        <li>
+                            <form action="{{ url_for('redirector', page='search') }}" method='post'>
+                                <input type='text' placeholder='Search...' name='title' autocomplete='off'>
+                            </form>
+                        </li>
+                    </div>
+                    <div class='logout'>
+                        <li><form action="{{ url_for('login') }}" method='get'><button>Log Out</button></form></li>
+                    </div>
+                </ul>
+            </nav>
+        </div>
+        <div class='header'><h1>Bush Studies</h1></div>
+    </body>
+</html>

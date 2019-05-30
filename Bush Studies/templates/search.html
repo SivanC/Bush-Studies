@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Bush Studies | Search</title>
+
+        <link rel="apple-touch-icon" sizes="180x180" href="/static/images/apple-touch-icon.png">
+	    <link rel="icon" type="image/png" sizes="32x32" href="/static/images/favicon-32x32.png">
+	    <link rel="icon" type="image/png" sizes="16x16" href="/static/images/favicon-16x16.png">
+	    <link rel="manifest" href="/static/images/site.webmanifest">
+
+        <link href="https://fonts.googleapis.com/css?family=Montserrat&display=swap" rel="stylesheet">
+	    <link rel="stylesheet" type="text/css" href="/static/css/main.css">
+
+	    <style>
+	    .tbl th, td {
+            border-bottom: 1px solid rgb(18, 56, 94);
+            border-collapse: collapse;
+        }
+
+        .tbl table {
+            position: absolute;
+            top: 30%;
+            left: 15%;
+            width: 70%;
+            padding-bottom: 10%;
+            z-index: -1;
+        }
+
+        .tbl th, td {
+            padding: 15px;
+            width: 50%;
+        }
+
+        .tbl th {
+            font-size: 18px;
+        }
+	    </style>
+    </head>
+    <body>
+        <div class='image'>
+            <a href="http://www.bush.edu">
+			    <img src="/static/images/logo.png">
+		    </a>
+        </div>
+        <div class='navbar'>
+            <nav>
+                <ul>
+                    {# Here we use the <form> tag with action and method
+                    attributes. action defines which page we want to be taken
+                    to when submitting the form, and method determines how to
+                    signal the page #}
+                    <li><form action="{{ url_for('index') }}" method='get'> <button>Home</button> </form></li>
+                    <li><form action="{{ url_for('studies') }}" method='get'> <button>Studies</button> </form></li>
+                    <li><form action="{{ url_for('create') }}" method='get'><button>Create</button></form></li>
+                    <li><form action="{{ url_for('about') }}" method='get'><button>About</button></form></li>
+                    <div class='search'>
+                        <li>
+                            <form action="{{ url_for('redirector', page='search') }}" method='post'>
+                                <input type='text' placeholder='Search...' name='title' autocomplete='off'>
+                            </form>
+                        </li>
+                    </div>
+                    <div class='logout'>
+                        <li><form action="{{ url_for('login') }}" method='get'><button>Log Out</button></form></li>
+                    </div>
+                </ul>
+            </nav>
+        </div>
+        <div class='header'><h1>Search Results</h1></div>
+        <div class="tbl">
+        	<table>
+        		<tr>
+        			<th>Title</th>
+        			<th>Author</th>
+        		</tr>
+        	    {% for study in results %}
+        	    <tr>
+        	        <td><a href={{ 'https://bushstudies.pythonanywhere.com/studies/' ~ study.unique_id }}>{{ study.title }}</a></td>
+        	        <td>{{ study.author }}</td>
+        	    </tr>
+        	    {% endfor %}
+        	</table>
+        </div>
+    </body>
+</html>

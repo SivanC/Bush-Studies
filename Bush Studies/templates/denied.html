@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Bush Studies | Access Denied</title>
+
+        <link rel="apple-touch-icon" sizes="180x180" href="/static/images/apple-touch-icon.png">
+	    <link rel="icon" type="image/png" sizes="32x32" href="/static/images/favicon-32x32.png">
+	    <link rel="icon" type="image/png" sizes="16x16" href="/static/images/favicon-16x16.png">
+	    <link rel="manifest" href="/static/images/site.webmanifest">
+
+        <link href="https://fonts.googleapis.com/css?family=Montserrat&display=swap" rel="stylesheet">
+	    <link rel="stylesheet" type="text/css" href="/static/css/main.css">
+
+	    <style>
+	        input {
+	            background-color: #cccccc;
+	            border: none;
+	            padding: 16px 32px;
+	        }
+
+	        input:hover {
+	            background-color: #a8a8a8;
+	        }
+	    </style>
+    </head>
+    <body>
+        <p style='font-family: "Montserrat", sans-serif'>
+            You must use an email ending in '@bush.edu' in order to access
+            this website.
+        </p>
+        <form action={{ url_for('login') }} method='get'>
+            <input type='Submit' value='Return to Login'>
+        </form>
+    </body>
+</html>
